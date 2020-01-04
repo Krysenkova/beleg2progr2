@@ -2,17 +2,13 @@ import java.util.Arrays;
 
 public class Vector {
     private int dimension;
-    private int[] content;
+    private float[] content;
 
-    public Vector(int dimension) {
-        this.dimension = dimension;
-    }
-
-    public Vector(int[] content) {
+    public Vector(float[] content) {
         this.content = content;
     }
 
-    public int[] getContent() {
+    public float[] getContent() {
         return content;
     }
 
@@ -22,9 +18,9 @@ public class Vector {
     }
 
     public Vector sum(Vector b) {
-        int[] summand1 = this.getContent();
-        int[] summand2 = b.getContent();
-        int[] summe = new int[summand1.length];
+        float[] summand1 = this.getContent();
+        float[] summand2 = b.getContent();
+        float[] summe = new float[summand1.length];
         for (int i = 0; i < summand1.length; i++) {
             summe[i] = summand1[i] + summand2[i];
         }
@@ -32,20 +28,20 @@ public class Vector {
     }
 
     public Vector diff(Vector b) {
-        int[] minuend = this.getContent();
-        int[] subtrahend = b.getContent();
-        int[] differenz = new int[minuend.length];
+        float[] minuend = this.getContent();
+        float[] subtrahend = b.getContent();
+        float[] differenz = new float[minuend.length];
         for (int i = 0; i < minuend.length; i++) {
             differenz[i] = minuend[i] - subtrahend[i];
         }
         return new Vector(differenz);
     }
 
-    public int skalarprodukt(Vector b) {
-        int[] multiplikator1 = this.getContent();
-        int[] multiplikator2 = b.getContent();
-        int[] produkt = new int[multiplikator1.length];
-        int skalar = 1;
+    public float skalarprodukt(Vector b) {
+        float[] multiplikator1 = this.getContent();
+        float[] multiplikator2 = b.getContent();
+        float[] produkt = new float[multiplikator1.length];
+        float skalar = 0;
         for (int i = 0; i < multiplikator1.length; i++) {
             produkt[i] = multiplikator1[i] * multiplikator2[i];
             skalar = produkt[i] + skalar;
@@ -54,8 +50,8 @@ public class Vector {
     }
 
     public Vector mult(int z) {
-        int[] multiplik = this.getContent();
-        int[] mprodukt = new int[multiplik.length];
+        float[] multiplik = this.getContent();
+        float[] mprodukt = new float[multiplik.length];
         for (int i = 0; i < multiplik.length; i++) {
             mprodukt[i] = multiplik[i] * z;
         }
@@ -63,20 +59,19 @@ public class Vector {
     }
 
     public Vector einheits() {
-        int[] inVektor = this.getContent();
-        int[] einheitsvektor = new int[inVektor.length];
+        float[] inVektor = this.getContent();
+        float[] einheitsvektor = new float[inVektor.length];
         int betrag = 0;
         for (int i = 0; i < inVektor.length; i++) {
-            betrag = (int) Math.sqrt((inVektor[i] * inVektor[i]) + betrag);
-            einheitsvektor[i] = inVektor[i] / betrag;
+            einheitsvektor[i] = inVektor[i] / betrag();
         }
         return new Vector(einheitsvektor);
     }
 
-    public int betrag() {
-        int[] initVektor = this.getContent();
+    public float betrag() {
+        float[] initVektor = this.getContent();
         int betrag;
-        int step = 0;
+        float step = 0;
         for (int i = 0; i < initVektor.length; i++) {
             step = (initVektor[i] * initVektor[i]) + step;
         }
@@ -84,11 +79,20 @@ public class Vector {
         return betrag;
     }
 
-    public int spatprodukt(Vector b, Vector c) {
-        int[] vekt1 = this.getContent();
-        int[] vekt2 = b.getContent();
-        int[] vekt3 = c.getContent();
+    public Vector kreuzprodukt(Vector b) {
+        float[] vekt1 = this.getContent();
+        float[] vekt2 = b.getContent();
+        float[] ergebnis;
+        ergebnis = new float[]{vekt1[1] * vekt2[2] - vekt1[2] * vekt2[1], vekt1[2] * vekt2[0] - vekt1[0] * vekt2[2], vekt1[0] * vekt2[1] - vekt1[1] * vekt2[0]};
 
+        return new Vector(ergebnis);
+    }
 
-
-            }
+    public float spatprodukt(Vector b, Vector c) {
+        float[] erste = this.getContent();
+        float[] zweite = b.getContent();
+        float[] dritte = c.getContent();
+        float det = ((erste[0] * zweite[1] * dritte[2]) + (erste[2] * zweite[0] * dritte[1]) + (erste[1] * zweite[2] * dritte[0])) - ((erste[2] * zweite[1] * dritte[0]) + (erste[0] * zweite[2] * dritte[1]) + (erste[1] * zweite[0] * dritte[2]));
+        return det;
+    }
+}
