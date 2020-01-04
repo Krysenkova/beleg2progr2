@@ -11,18 +11,15 @@ public class Conversation {
     int[] dimensions;
     Vector[] vectors;
 
-    public void startdialogwithUser() {
-        System.out.println("VEKTOR RECHNER");
+    public void startDialogWithUser() {
+        System.out.println("--------------------VEKTOR RECHNER--------------------");
         howManyVectorsQuestion();
         askIsRandom();
         askVectorsDimension();
         if (isRandom == true) createVectorsWithRandomNumbers();
         else createVectorsWithUserInput();
-
-        System.out.println("Ihre Vektoren:");
-        for (int i = 0; i < vectors.length; i++) {
-            System.out.println("Vector " + (i + 1) + ": " + vectors[i]);
-        }
+        System.out.println(" ");
+        ausgabe();
         menuOperationen();
     }
 
@@ -31,7 +28,7 @@ public class Conversation {
         int howManyVectors = in.nextInt();
         this.vectorsNumber = howManyVectors;
         if (howManyVectors < 3 || howManyVectors < 0) {
-            System.out.println("Die Anzahl von Vektoren soll mindestens 3 sein");
+            System.out.println("----Die Anzahl von Vektoren soll mindestens 3 sein----");
             howManyVectorsQuestion();
         }
     }
@@ -54,7 +51,7 @@ public class Conversation {
         for (int i = 0; i < vectorsNumber; i++) {
             int dimension = askDimension(i);
             while (dimension > 6 || dimension < 0) {
-                System.out.println("Die Dimension soll positive und maximal 6 sein");
+                System.out.println("----Die Dimension soll positive und maximal 6 sein----");
                 dimension = askDimension(i);
             }
             dimensions[i] = dimension;
@@ -94,11 +91,11 @@ public class Conversation {
     }
 
     public void menuOperationen() {
-        System.out.println("-----------MENU: OPERATIONEN------------");
+        System.out.println("---------------------MENU: OPERATIONEN---------------------");
         char aktion = '0';
         while (aktion != 'e') {
             System.out.println();
-            System.out.println("--> Bitte wählen Sie eine Aktion aus <--");
+            System.out.println("-------> Bitte wählen Sie eine Aktion aus <-------");
             System.out.println(" a - Eingegebene Vektoren zeigen");
             System.out.println(" s - Summe berechnen");
             System.out.println(" d - Differenz berechnen");
@@ -142,7 +139,7 @@ public class Conversation {
                 case 'e':
                     break;
                 default:
-                    System.out.println("Falsche Eingabe - bitte wiederholen");
+                    System.out.println("------Falsche Eingabe - bitte wiederholen------");
             }
         }
     }
@@ -158,13 +155,22 @@ public class Conversation {
         System.out.println("Wählen Sie Vektor - Summand 1 (bsp. 1)");
         System.out.println("Bitte beachten Sie dass die Vektoren sollen gleiche Dimensionen haben");
         int s1 = in.nextInt();
+        while (s1 > vectorsNumber) {
+            System.out.println("-----Falsche Eingabe - bitte wählen Summand 1-----");
+            s1 = in.nextInt();
+        }
         System.out.println("Wählen Sie Vektor - Summand 2 (bsp. 2)");
         System.out.println("Bitte beachten Sie dass die Vektoren sollen gleiche Dimensionen haben");
         int s2 = in.nextInt();
+        while (s2 > vectorsNumber) {
+            System.out.println("-----Falsche Eingabe - bitte wählen Summand 2-----");
+            s2 = in.nextInt();
+        }
         Vector a = vectors[s1 - 1];
         Vector b = vectors[s2 - 1];
         if (dimensions[s1 - 1] != dimensions[s2 - 1]) {
             System.out.println("Die Vektoren sollen gleiche Dimension haben - wählen noch einmal");
+            summeDialog();
         }
         Vector c = a.sum(b);
         System.out.printf("Summe von Vektor %d und Vektor %d ist:%n", s1, s2);
@@ -175,11 +181,23 @@ public class Conversation {
         System.out.println("Wählen Sie Vektor - Minuend (bsp. 1)");
         System.out.println("Bitte beachten dass die Vektoren sollen gleiche Dimensionen haben");
         int m1 = in.nextInt();
+        while (m1 > vectorsNumber) {
+            System.out.println("-----Falsche Eingabe - bitte wählen Minuend-----");
+            m1 = in.nextInt();
+        }
         System.out.println("Wählen Sie Vektor - Subtrahend (bsp. 2)");
         System.out.println("Bitte beachten dass die Vektoren sollen gleiche Dimensionen haben");
         int st2 = in.nextInt();
+        while (st2 > vectorsNumber) {
+            System.out.println("-----Falsche Eingabe - bitte wählen Subtrahend-----");
+            st2 = in.nextInt();
+        }
         Vector a = vectors[m1 - 1];
         Vector b = vectors[st2 - 1];
+        if (dimensions[m1 - 1] != dimensions[st2 - 1]) {
+            System.out.println("---Dimensionen sind nicht gleich - wählen noch einmal---");
+            differenzDialog();
+        }
         Vector c = a.diff(b);
 
         System.out.printf("Differenz von Vektor %d und Vektor %d ist:%n", m1, st2);
@@ -190,11 +208,23 @@ public class Conversation {
         System.out.println("Wählen Sie Vektor - Multiplikator 1 (bsp. 1)");
         System.out.println("Bitte beachten dass die Vektoren sollen gleiche Dimensionen haben");
         int mp1 = in.nextInt();
+        while (mp1 > vectorsNumber) {
+            System.out.println("-----Falsche Eingabe - bitte wählen Multiplikator 1-----");
+            mp1 = in.nextInt();
+        }
         System.out.println("Wählen Sie Vektor - Multipliktor 2 (bsp. 2)");
         System.out.println("Bitte beachten dass die Vektoren sollen gleiche Dimensionen haben");
         int mp2 = in.nextInt();
+        while (mp2 > vectorsNumber) {
+            System.out.println("-----Falsche Eingabe - bitte wählen Multiplikator 2-----");
+            mp2 = in.nextInt();
+        }
         Vector a = vectors[mp1 - 1];
         Vector b = vectors[mp2 - 1];
+        if (dimensions[mp1 - 1] != dimensions[mp2 - 1]) {
+            System.out.println("---Dimensionen sind nicht gleich - wählen noch einmal---");
+            skalarproduktDialog();
+        }
         float c = a.skalarprodukt(b);
 
         System.out.printf("Skalarprodukt von Vektor %d und Vektor %d ist:%n", mp1, mp2);
@@ -204,6 +234,10 @@ public class Conversation {
     public void multiplikationDialog() {
         System.out.println("Wählen Sie Vektor für Multiplikation (bsp. 1)");
         int mp = in.nextInt();
+        while (mp > vectorsNumber) {
+            System.out.println("----Falsche Eingabe - bitte wählen ein neues Vektor----");
+            mp = in.nextInt();
+        }
         System.out.println("Geben Sie die Zahl für Multiplikation ein");
         int z = in.nextInt();
         Vector a = vectors[mp - 1];
@@ -215,6 +249,10 @@ public class Conversation {
     public void einheitsVektorDialog() {
         System.out.println("Wählen Sie Vektor für Berechnen (bsp. 1)");
         int ein = in.nextInt();
+        while (ein > vectorsNumber) {
+            System.out.println("----Falsche Eingabe - bitte wählen ein neues Vektor----");
+            ein = in.nextInt();
+        }
         Vector a = vectors[ein - 1];
         Vector b = a.einheits();
         System.out.printf("Einheitsvektor von Vektor %d ist:", ein);
@@ -224,6 +262,10 @@ public class Conversation {
     public void betragDialog() {
         System.out.println("Wählen Sie Vektor für Berechnen (bsp. 1)");
         int be = in.nextInt();
+        while (be > vectorsNumber) {
+            System.out.println("----Falsche Eingabe - bitte wählen ein neues Vektor----");
+            be = in.nextInt();
+        }
         Vector a = vectors[be - 1];
         float b = a.betrag();
         System.out.printf("Länge des Vektors %d ist: ", be);
@@ -234,11 +276,23 @@ public class Conversation {
         System.out.println("Wählen Sie den ersten Vektor aus");
         System.out.println("Bitte beachten Sie dass die Vektoren sollen Dimension 3 haben");
         int v1 = in.nextInt();
-        Vector a = vectors[v1 - 1];
+        while (v1 > vectorsNumber) {
+            System.out.println("----Falsche Eingabe - bitte wählen ein neues Vektor----");
+            v1 = in.nextInt();
+        }
         System.out.println("Wählen Sie den zweiten Vektor aus");
-        System.out.println("Bitte beachten Sie dass die Vektoren sollen Dimensionen 3 haben");
+        System.out.println("Bitte beachten Sie dass die Vektoren sollen Dimension 3 haben");
         int v2 = in.nextInt();
+        while (v2 > vectorsNumber) {
+            System.out.println("----Falsche Eingabe - bitte wählen ein neues Vektor----");
+            v2 = in.nextInt();
+        }
+        Vector a = vectors[v1 - 1];
         Vector b = vectors[v2 - 1];
+        if (dimensions[v1 - 1] != 3 && dimensions[v2 - 1] != 3) {
+            System.out.println("---Dimensionen sind ungleich 3 - wählen noch einmal---");
+            kreuzDialog();
+        }
         Vector c = a.kreuzprodukt(b);
         System.out.println(c);
     }
@@ -247,15 +301,31 @@ public class Conversation {
         System.out.println("Wählen Sie den ersten Vektor aus");
         System.out.println("Bitte beachten Sie dass die Vektoren sollen Dimension 3 haben");
         int wahl1 = in.nextInt();
-        Vector a = vectors[wahl1 - 1];
+        while (wahl1 > vectorsNumber) {
+            System.out.println("----Falsche Eingabe - bitte wählen ein neues Vektor----");
+            wahl1 = in.nextInt();
+        }
         System.out.println("Wählen Sie den zweiten Vektor aus");
         System.out.println("Bitte beachten Sie dass die Vektoren sollen Dimensionen 3 haben");
         int wahl2 = in.nextInt();
-        Vector b = vectors[wahl2 - 1];
+        while (wahl2 > vectorsNumber) {
+            System.out.println("----Falsche Eingabe - bitte wählen ein neues Vektor----");
+            wahl2 = in.nextInt();
+        }
         System.out.println("Wählen Sie den dritten Vektor aus");
         System.out.println("Bitte beachten Sie dass die Vektoren sollen Dimensionen 3 haben");
         int wahl3 = in.nextInt();
+        while (wahl3 > vectorsNumber) {
+            System.out.println("----Falsche Eingabe - bitte wählen ein neues Vektor----");
+            wahl3 = in.nextInt();
+        }
+        Vector a = vectors[wahl1 - 1];
+        Vector b = vectors[wahl2 - 1];
         Vector c = vectors[wahl3 - 1];
+        if (dimensions[wahl1 - 1] != 3 && dimensions[wahl2 - 1] != 3 && dimensions[wahl3 - 1] != 3) {
+            System.out.println("---Dimensionen sind ungleich 3 - wählen noch einmal---");
+            spatDialog();
+        }
         float det = a.spatprodukt(b, c);
         System.out.println(det);
     }
