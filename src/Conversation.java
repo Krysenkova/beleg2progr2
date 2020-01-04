@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -20,6 +21,7 @@ public class Conversation {
         else createVectorsWithUserInput();
         System.out.println(" ");
         ausgabe();
+        System.out.println();
         menuOperationen();
     }
 
@@ -91,21 +93,17 @@ public class Conversation {
     }
 
     public void menuOperationen() {
-        System.out.println("---------------------MENU: OPERATIONEN---------------------");
+        System.out.println("--------------------------MENU: OPERATIONEN MIT VEKTOREN--------------------------");
         char aktion = '0';
         while (aktion != 'e') {
-            System.out.println();
-            System.out.println("-------> Bitte wählen Sie eine Aktion aus <-------");
-            System.out.println(" a - Eingegebene Vektoren zeigen");
-            System.out.println(" s - Summe berechnen");
-            System.out.println(" d - Differenz berechnen");
-            System.out.println(" p - Skalarprodukt berechnen");
-            System.out.println(" m - Ein Vektor mit einer Zahl multipliezieren");
-            System.out.println(" i - Einheitsvektor berechnen");
-            System.out.println(" l - Länge des Vektors berechnen");
-            System.out.println(" v - Vektorprodukt berechnen");
-            System.out.println(" r - Spatprodukt berechnen");
-            System.out.println(" e - Programm beenden");
+            System.out.println(" ");
+            System.out.println("-----------------------> BITTE WÄHLEN SIE EINE AKTION AUS <-----------------------");
+            System.out.println(" a - Eingegebene Vektoren zeigen                   i - Einheitsvektor berechnen");
+            System.out.println(" s - Summe berechnen                               l - Länge des Vektors berechnen");
+            System.out.println(" d - Differenz berechnen                           v - Vektorprodukt berechnen");
+            System.out.println(" p - Skalarprodukt berechnen                       r - Spatprodukt berechnen");
+            System.out.println(" m - Ein Vektor mit einer Zahl multipliezieren     e - Programm beenden");
+            System.out.println("----------------------------------------------------------------------------------");
             System.out.println("Ihre Eingabe: ");
             aktion = in.next().charAt(0);
             switch (aktion) {
@@ -294,6 +292,7 @@ public class Conversation {
             kreuzDialog();
         }
         Vector c = a.kreuzprodukt(b);
+        System.out.printf("Vektorprodukt von Vektor %d und Vektor %d ist: ", v1, v2);
         System.out.println(c);
     }
 
@@ -327,6 +326,7 @@ public class Conversation {
             spatDialog();
         }
         float det = a.spatprodukt(b, c);
+        System.out.printf("Spatprodukt von Vektor %d, Vektor %d und Vektor %d ist: ", wahl1, wahl2, wahl3);
         System.out.println(det);
     }
 
